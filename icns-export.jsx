@@ -55,10 +55,9 @@
   var totalLength = 0;
   for (var i = 0; i < formats.length; i++) {
     var format = formats[i];
-    var filePng = tempPath(file, format.type);
+    var filePng = new File(Folder.temp + '/icns-export-temp.png');
     exportAsPng(filePng, format.size);
     format.png = readFile(filePng);
-    filePng.remove();
     totalLength += format.png.length;
   }
   openFile(file, 'w');
@@ -101,10 +100,6 @@
 
   function closeFile(file) {
     file.close();
-  }
-
-  function tempPath(file, suffix) {
-    return new File(file.toString() + '-' + suffix + '.png');
   }
 
   function exportAsPng(file, size) {
