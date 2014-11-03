@@ -63,7 +63,7 @@
   openFile(file, 'w');
 
   writeString(file, 'icns');
-  writeInt(file, 8 + 8 * format.length + totalLength);
+  writeInt(file, 8 + 8 * formats.length + totalLength);
   for (var i = 0; i < formats.length; i++) {
     var format = formats[i];
     writeString(file, format.type);
