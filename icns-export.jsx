@@ -34,7 +34,7 @@
 
   var file = File.saveDialog('Choose an .icns file to export to');
   if (!file || !file.toString().match(/\.icns$/)) {
-    alert('You must choose an .icsn file');
+    alert('You must choose an .icns file');
     return;
   }
 
