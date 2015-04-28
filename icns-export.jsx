@@ -32,9 +32,9 @@
     return;
   }
 
-  var file = File.saveDialog('Choose an .icns file to export to');
-  if (!file || !file.toString().match(/\.icns$/)) {
-    alert('You must choose an .icns file');
+  var file = getTargetFile(doc, '.icns');
+  if (!file) {
+    alert('Canceled export');
     return;
   }
 
@@ -60,6 +60,7 @@
     format.png = readFile(filePng);
     totalLength += format.png.length;
   }
+
   openFile(file, 'w');
 
   writeString(file, 'icns');
@@ -72,6 +73,8 @@
   }
 
   closeFile(file);
+  alert('Exported to ' + file.toString());
+
 
   function writeInt(file, i) {
     var a = String.fromCharCode((i >> 24) & 255);
@@ -113,5 +116,28 @@
     exp.transparency = true;
 
     doc.exportFile(file, expType, exp);
+  }
+
+  function getTargetFile(doc, ext) {
+    var destFolder = Folder.selectDialog('Select folder for ' + ext + ' file.', '~');
+
+    if (destFolder) {
+      var newName = '';
+
+      // if name has no dot (and hence no extension),
+      // just append the extension
+      if (doc.name.indexOf('.') < 0) {
+        newName = doc.name + ext;
+      } else {
+        var dot = doc.name.lastIndexOf('.');
+        newName += doc.name.substring(0, dot);
+        newName += ext;
+      }
+
+      // Create the file object to save to
+      return new File(destFolder + '/' + newName);
+    } else {
+      return null;
+    }
   }
 })();
