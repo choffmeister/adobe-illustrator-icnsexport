@@ -73,7 +73,7 @@
   }
 
   closeFile(file);
-  alert('Exported to ' + file.toString());
+  alert('Exported to ' + decodeURIComponent(file.toString()));
 
 
   function writeInt(file, i) {
