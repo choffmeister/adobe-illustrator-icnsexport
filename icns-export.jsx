@@ -22,10 +22,22 @@
  */
 
 (function () {
-  var doc = app.activeDocument;
+  var doc = null;
+  try {
+    doc = app.activeDocument;
+  } catch (ex) {
+    alert('You must have an active document');
+    return;
+  }
+
   var ab = doc.artboards[0];
   var width = ab.artboardRect[2] - ab.artboardRect[0];
   var height = ab.artboardRect[1] - ab.artboardRect[3];
+
+  if (doc.path == '' || !doc.saved) {
+    alert('You must save your document before exporting it');
+    return;
+  }
 
   if (width != 1024 || height != 1024) {
     alert('Your document has size ' + width + 'x' + height + ' pixels, but must have size 1024x1024 pixels');
@@ -60,6 +72,7 @@
     format.png = readFile(filePng);
     totalLength += format.png.length;
   }
+  doc.save();
 
   openFile(file, 'w');
 
